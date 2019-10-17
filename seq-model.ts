@@ -6,6 +6,7 @@ Potentially, we want this part to be the problem set so students can modify clas
 
 import { SequencerView } from "./seq-view";
 import { SequencerController } from "./seq-controller";
+import * as Tone from "tone";
 
 
 export class Sequencer {
@@ -18,10 +19,35 @@ export class Sequencer {
         this.cols = cols;
     }
 
+    playSoundOne(): void {
+        // play sound one
+    }
+
+    playSoundTwo(): void {
+        // play sound two
+    }
+    
+    playSoundThree(): void {
+        // play sound three
+
+    }
 
     // some methods here
 
 }
+
+export class Piano {
+
+}
+
+export class Guitar {
+
+}
+
+export class Drum {
+
+}
+
 
 
 
