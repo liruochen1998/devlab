@@ -32,12 +32,15 @@ export class SequencerView {
     }
 
     draw(): void {
-        for (let i = 0; i < this.model.cols; i++) {
+        for (let row = 0; row < this.model.rows; row++) {
             let line: HTMLElement = document.createElement("div");
-            line.setAttribute("class", "line" + i);
-            for (let i = 0; i < this.model.rows; i++) {
+            line.setAttribute("class", "line" + row);
+            for (let col = 0; col < this.model.cols; col++) {
                 let checkbox: HTMLInputElement = document.createElement("input");
                 checkbox.setAttribute("type", "checkbox");
+                if (this.model.grid[row][col]) {
+                    checkbox.setAttribute("checked", "true");
+                }
                 console.log(checkbox);
                 line.appendChild(checkbox);
             }

@@ -20,13 +20,14 @@ let guitar = new Tone.PluckSynth(guitarOptions).toMaster();
 export class Sequencer {
     rows: number;
     cols: number;
-    grids: number[][];
+    grid: boolean[][];
     pitches: string[] = ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5"];
     instruments: Tone.Instrument[] = [guitar, synth, guitar, synth, guitar, synth, guitar, synth];
 
-    constructor(rows: number, cols: number) {
-        this.rows = rows;
-        this.cols = cols;
+    constructor(grid: boolean[][]) {
+        this.grid = grid;
+        this.rows = grid.length;
+        this.cols = grid[0].length;
     }
     
     playSound(row: number): void {
