@@ -8,41 +8,41 @@ import { SequencerView } from "./seq-view";
 import { SequencerController } from "./seq-controller";
 import * as Tone from "tone";
 
+let synth = new Tone.Synth().toMaster();
+
+let guitarOptions = {
+    attackNoise: 0.5,
+    dampening: 4000,
+    resonance: 0.7,
+};
+let guitar = new Tone.PluckSynth(guitarOptions).toMaster();
 
 export class Sequencer {
     rows: number;
     cols: number;
     grids: number[][];
+    pitches: string[] = ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5"];
+    instruments: Tone.Instrument[] = [guitar, synth, guitar, synth, guitar, synth, guitar, synth];
 
     constructor(rows: number, cols: number) {
         this.rows = rows;
         this.cols = cols;
     }
-
-    playSoundOne(): void {
-        // play sound one
-    }
-
-    playSoundTwo(): void {
-        // play sound two
-    }
     
-    playSoundThree(): void {
-        // play sound three
-
+    playSound(row: number): void {
+        let instrument = this.instruments[row];
+        instrument.triggerAttackRelease(this.pitches[row], "8n");
     }
 
     // some methods here
 
 }
 
-export class Piano {
+// export class Piano extends Tone.Synth {
+// }
 
-}
-
-export class Guitar {
-
-}
+// export class Guitar extends Tone.PluckSynth {
+// }
 
 export class Drum {
 
