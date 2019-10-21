@@ -32,6 +32,8 @@ export class SequencerView {
     }
 
     draw(): void {
+        // now draw using divs
+        /*
         for (let row = 0; row < this.model.rows; row++) {
             let line: HTMLElement = document.createElement("div");
             line.setAttribute("class", "line" + row);
@@ -46,6 +48,7 @@ export class SequencerView {
             }
             this.body.appendChild(line);
         }
+        */
     }
 
     play(): void {
