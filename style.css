@@ -1,4 +1,4 @@
-:host {
+ #mainbody {
     display: inline-block;
                       width: 100%;
                       height: 120px;
@@ -35,7 +35,7 @@
   .row {
     flex: 1;
                       margin: 1px;
-                      background-color: var(--color-light-gray);
+                      background-color: lightgray;
                       transition: background-color 0s;
   }
   

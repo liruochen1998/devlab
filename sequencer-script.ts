@@ -8,7 +8,7 @@ import * as Tone from "tone";
 
 export let main = (): void => {
 
-    let rows = 8;
+    let rows = 4;
     let cols = 8;
     let grid = new Array(rows).fill(false).map(
         () => new Array(cols).fill(false));

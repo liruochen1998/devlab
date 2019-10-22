@@ -33,6 +33,19 @@ export class SequencerView {
 
     draw(): void {
         // now draw using divs
+        let containerDiv: HTMLElement = document.createElement("div");
+        containerDiv.setAttribute("id", "container");
+        this.body.appendChild(containerDiv);
+        for (let col = 0; col < this.model.cols; col++) {
+            let colDiv: HTMLElement = document.createElement("div");
+            colDiv.setAttribute("class", "column");
+            containerDiv.appendChild(colDiv);
+            for (let row = 0; row < this.model.rows; row++) {
+                let rowDiv: HTMLElement = document.createElement("div");
+                rowDiv.setAttribute("class", "row");
+                colDiv.appendChild(rowDiv);
+            }
+        }
         /*
         for (let row = 0; row < this.model.rows; row++) {
             let line: HTMLElement = document.createElement("div");
