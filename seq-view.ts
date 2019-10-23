@@ -43,25 +43,17 @@ export class SequencerView {
             for (let row = 0; row < this.model.rows; row++) {
                 let rowDiv: HTMLElement = document.createElement("div");
                 rowDiv.setAttribute("class", "row");
+                rowDiv.onclick = () => {
+                    if (rowDiv.className === "row") { 
+                        rowDiv.setAttribute("class", "row filled");
+                    } else {
+                        rowDiv.setAttribute("class", "row");
+                    }
+
+                }; 
                 colDiv.appendChild(rowDiv);
             }
         }
-        /*
-        for (let row = 0; row < this.model.rows; row++) {
-            let line: HTMLElement = document.createElement("div");
-            line.setAttribute("class", "line" + row);
-            for (let col = 0; col < this.model.cols; col++) {
-                let checkbox: HTMLInputElement = document.createElement("input");
-                checkbox.setAttribute("type", "checkbox");
-                if (this.model.grid[row][col]) {
-                    checkbox.setAttribute("checked", "true");
-                }
-                console.log(checkbox);
-                line.appendChild(checkbox);
-            }
-            this.body.appendChild(line);
-        }
-        */
     }
 
     play(): void {

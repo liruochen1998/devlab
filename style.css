@@ -40,5 +40,5 @@
   }
   
   .row.filled {
-    background-color: var(--color-teal);
+    background-color: teal;
   }
