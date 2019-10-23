@@ -17,7 +17,7 @@
   }
   
   .column.highlight {
-    background-color: var(--color-gray);
+    background-color: gray;
   }
   
   .column.highlight .row {

@@ -55,7 +55,37 @@ export class SequencerView {
             }
         }
     }
+    
+    play_sync(): void {
+        // alert("in sequence play");
+        console.log("in sequence play");
+        let prevCol: Element = null;
+        let callback = (time:any, col:any) => {
+            let container = document.getElementById("container");
+            console.log(time, col);
+            let currCol = document.querySelectorAll(".column")[col];
+            Tone.Draw.schedule(() => {
+                currCol.setAttribute("class", "column highlight");
+                if (prevCol != null) {
+                    prevCol.setAttribute("class", "column");
+                }
+                prevCol = currCol;
+                container.setAttribute("highlight", col);
+            },                 time);
+                
 
+        };
+        let events: string[] = ["0", "1", "2", "3", "4", "5", "6", "7"];
+        // let events: string[] = ["C4", "E4", "G4", "A4"];
+        let subdivision = "8n";
+        let loop = new Tone.Sequence(callback, events, subdivision).start(0);
+
+        Tone.Transport.start();
+
+
+    }
+
+    // old play method
     play(): void {
         let sequence = 0;
         let repeat = (): void => {

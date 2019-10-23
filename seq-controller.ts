@@ -38,7 +38,8 @@ export class SequencerController {
     start(): void {
         // play the sound
         alert("start clicked");
-        this.view.play();
+        // this.view.play();
+        this.view.play_sync();
 
     }
 
