@@ -45,7 +45,7 @@ export class SequencerController {
 
     stop(): void {
         // stop playing the sound
-        alert("stop clicked");
+        // alert("stop clicked");
         this.view.stop();
 
     }

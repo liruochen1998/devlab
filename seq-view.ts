@@ -6,6 +6,9 @@ import { SequencerController } from "./seq-controller";
 import { Sequencer } from "./seq-model";
 import * as Tone from "tone";
 
+// to do:
+// make tone work
+// make students change the color by themselves
 export class SequencerView {
     model: Sequencer;
     body: HTMLElement;
@@ -64,6 +67,19 @@ export class SequencerView {
             let container = document.getElementById("container");
             console.log(time, col);
             let currCol = document.querySelectorAll(".column")[col];
+            let elementCol = currCol.childNodes;
+            elementCol.forEach((row: Element, index: number) => {
+                
+                // play the sound
+                if (row.className === "row filled") {
+                    this.model.playSound(index);
+                }
+                
+                console.log(row);
+            
+            });
+
+            // draw css to represent current row
             Tone.Draw.schedule(() => {
                 currCol.setAttribute("class", "column highlight");
                 if (prevCol != null) {
