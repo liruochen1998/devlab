@@ -7,48 +7,147 @@ Potentially, we want this part to be the problem set so students can modify clas
 import { SequencerView } from "./seq-view";
 import { SequencerController } from "./seq-controller";
 import * as Tone from "tone";
+import { Instrument } from "tone";
 
-let synth = new Tone.Synth().toMaster();
+export class Oscillator {
+    type: Tone.OscillatorType;
+    frequency: number;
+    
+    constructor(type: Tone.OscillatorType) {
+        this.type = type;
+        this.frequency = 440;
+    }
+}
 
-let guitarOptions = {
-    attackNoise: 0.5,
-    dampening: 4000,
-    resonance: 0.7,
-};
-let guitar = new Tone.PluckSynth(guitarOptions).toMaster();
+export class Envelope {
+    attack: number;
+    decay: number;
+    sustain: number;
+    release: number;
+
+    constructor(attack: number, decay: number, sustain: number, release: number) {
+        this.attack = attack;
+        this.decay = decay;
+        this.sustain = sustain;
+        this.release = release;
+    }
+}
+
+export class Synth {
+    oscillator: Oscillator;
+    envelope: Envelope;
+    constructor(o: Oscillator, e: Envelope) {
+        this.oscillator = o;
+        this.envelope = e;
+    }
+
+    getInstrument = (): Tone.Synth => {
+        return new Tone.Synth(this).toMaster();
+    }
+}
+
+let oscillator = new Oscillator("sine");
+let envelope = new Envelope(0.005, 0.1, 0.3, 1);
+let synth = new Synth(oscillator, envelope).getInstrument().toMaster();
+
+export class PluckSynth {
+    attackNoise: number;
+    dampening: number;
+    resonance: number;
+
+    constructor(attackNoise: number, dampening: number, resonance: number) {
+        this.attackNoise = attackNoise;
+        this.dampening = dampening;
+        this.resonance = resonance;
+    }
+
+    getInstrument = (): Tone.PluckSynth => {
+        return new Tone.PluckSynth(this).toMaster();
+    }
+}
+let pluckSynth = new PluckSynth(0.5, 4000, 0.7).getInstrument().toMaster();
+
+// Other instruments we could use
+let membraneSynth = new Tone.MembraneSynth().toMaster();
+let metalSynth = new Tone.MetalSynth().toMaster();
 
 export class Sequencer {
     rows: number;
     cols: number;
-    grid: boolean[][];
-    pitches: string[] = ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5"];
-    instruments: Tone.Instrument[] = [guitar, synth, guitar, synth, guitar, synth, guitar, synth];
+    grid: boolean[][] = new Array();
+    rowPitches: string[];
+    rowInstruments: Tone.Instrument[];
 
-    constructor(grid: boolean[][]) {
-        this.grid = grid;
-        this.rows = grid.length;
-        this.cols = grid[0].length;
+    constructor(rows: number, cols: number) {
+        this.rows = rows;
+        this.cols = cols;
+
+        for (let row = 0; row < rows; row++) {
+            this.grid[row] = [];
+            for (let col = 0; col < cols; col++) {
+                this.grid[row][col] = false;
+            }
+        }
+
+        this.rowPitches = this.getPitchesArray();
+        let allInstruments = [synth, pluckSynth, membraneSynth, metalSynth];
+        this.rowInstruments = this.getInstrumentsArray(allInstruments);
+        this.fillGridDiagonal();
+        this.fillGridRandom(10);
+    }
+
+    fillGridDiagonal = (): void => {
+        for (let i = 0; i < this.rows; i++) {
+            this.grid[i][i] = true;
+        }
+    }
+
+    toggleCell = (row: number, column: number): void => {
+        this.grid[row][column] = !this.grid[row][column];
+    }
+
+    fillGridRandom = (count: number): void => {
+        for (let i = 0; i < count; i++) {
+            let randRow = getRandomInteger(this.rows);
+            let randCol = getRandomInteger(this.cols);
+            if (this.grid[randRow][randCol]) {
+                i--;
+            } else {
+                this.grid[randRow][randCol] = true;
+            }
+        }
+    }
+
+    getPitchesArray = (): string[] => {
+        let arr = [];
+        for (let row = 0; row < this.rows; row++) {
+            arr[row] = getRandomPitch(3, 5);
+        }
+        return arr;
+    }
+
+    getInstrumentsArray = (allInstruments: Tone.Instrument[]): Tone.Instrument[] => {
+        let arr = [];
+        for (let row = 0; row < this.rows; row++) {
+            arr[row] = allInstruments[row % allInstruments.length];
+        }
+        return arr;
     }
     
     playSound(row: number): void {
-        let instrument = this.instruments[row];
-        instrument.triggerAttackRelease(this.pitches[row], "8n");
+        let instrument = this.rowInstruments[row];
+        instrument.triggerAttackRelease(this.rowPitches[row], "8n");
     }
-
-    // some methods here
-
 }
 
-// export class Piano extends Tone.Synth {
-// }
+let getRandomInteger = (max: number): number => {
+    return Math.floor(Math.random() * max);
+};
 
-// export class Guitar extends Tone.PluckSynth {
-// }
-
-export class Drum {
-
-}
-
-
-
+let getRandomPitch = (minOctave: number, maxOctave: number): string => {
+    let notes = ["A", "B", "C", "D", "E", "F", "G"];
+    let randNote = notes[getRandomInteger(notes.length)];
+    let randOctave = minOctave + getRandomInteger(maxOctave - minOctave + 1);
+    return randNote + randOctave; 
+};
 

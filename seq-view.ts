@@ -126,6 +126,3 @@ export class SequencerView {
         Tone.Transport.stop();
     }
 }
-
-
-
