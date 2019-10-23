@@ -37,14 +37,12 @@ export class SequencerController {
 
     start(): void {
         // play the sound
-        alert("start clicked");
         this.view.play();
 
     }
 
     stop(): void {
         // stop playing the sound
-        alert("stop clicked");
         this.view.stop();
 
     }

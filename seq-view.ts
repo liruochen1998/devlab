@@ -41,7 +41,7 @@ export class SequencerView {
                 if (this.model.grid[row][col]) {
                     checkbox.setAttribute("checked", "true");
                 }
-                console.log(checkbox);
+                // console.log(checkbox);
                 line.appendChild(checkbox);
             }
             this.body.appendChild(line);
@@ -72,6 +72,3 @@ export class SequencerView {
         Tone.Transport.stop();
     }
 }
-
-
-

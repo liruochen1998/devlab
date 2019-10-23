@@ -8,13 +8,7 @@ import * as Tone from "tone";
 
 export let main = (): void => {
 
-    let rows = 8;
-    let cols = 8;
-    let grid = new Array(rows).fill(false).map(
-        () => new Array(cols).fill(false));
-    grid[2][3] = true;
-
-    let model: Sequencer = new Sequencer(grid);
+    let model: Sequencer = new Sequencer(8, 8);
     let view: SequencerView = new SequencerView(model);
     let controller: SequencerController = new SequencerController(model, view);
 
