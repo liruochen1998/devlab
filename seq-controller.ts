@@ -26,9 +26,6 @@ export class SequencerController {
         this.initEvents();
 
     }
-
-
-
     
     initEvents(): void {
         this.startButton.onclick = this.start.bind(this);
@@ -37,17 +34,13 @@ export class SequencerController {
 
     start(): void {
         // play the sound
-        alert("start clicked");
-        // this.view.play();
         this.view.play_sync();
 
     }
 
     stop(): void {
         // stop playing the sound
-        // alert("stop clicked");
         this.view.stop();
-
     }
     
 }

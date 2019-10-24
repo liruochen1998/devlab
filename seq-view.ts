@@ -25,9 +25,11 @@ export class SequencerView {
         let startButton: HTMLButtonElement = document.createElement("button");
         startButton.innerHTML = "start";
         startButton.setAttribute("id", "start");
+        startButton.setAttribute("class", "btn btn-sm btn-light");
         let stopButton: HTMLButtonElement = document.createElement("button");
         stopButton.innerHTML = "stop";
         stopButton.setAttribute("id", "stop");
+        stopButton.setAttribute("class", "btn btn-sm btn-dark");
 
         this.body.appendChild(startButton);
         this.body.appendChild(stopButton);
@@ -91,14 +93,13 @@ export class SequencerView {
                 
 
         };
+        // this part is hard-coded, modify!
+        // column:
         let events: string[] = ["0", "1", "2", "3", "4", "5", "6", "7"];
-        // let events: string[] = ["C4", "E4", "G4", "A4"];
+        // pace:
         let subdivision = "8n";
         let loop = new Tone.Sequence(callback, events, subdivision).start(0);
-
         Tone.Transport.start();
-
-
     }
 
     // old play method
