@@ -8,6 +8,7 @@ import { SequencerView } from "./seq-view";
 import { SequencerController } from "./seq-controller";
 import * as Tone from "tone";
 import { Instrument } from "tone";
+import { getToneSynth } from "./synth";
 
 export class Oscillator {
     type: Tone.OscillatorType;
@@ -36,36 +37,45 @@ export class Envelope {
 export class Synth {
     oscillator: Oscillator;
     envelope: Envelope;
-    constructor(o: Oscillator, e: Envelope) {
-        this.oscillator = o;
-        this.envelope = e;
-    }
-
-    getInstrument = (): Tone.Synth => {
-        return new Tone.Synth(this).toMaster();
+    constructor(oscillator: Oscillator, envelope: Envelope) {
+        this.oscillator = oscillator;
+        this.envelope = envelope;
     }
 }
 
 let oscillator = new Oscillator("sine");
 let envelope = new Envelope(0.005, 0.1, 0.3, 1);
-let synth = new Synth(oscillator, envelope).getInstrument().toMaster();
+let synth = getToneSynth(new Synth(oscillator, envelope));
 
-export class PluckSynth {
-    attackNoise: number;
-    dampening: number;
-    resonance: number;
+// let synth = new Tone.Synth({
+//     oscillator: {
+//         type: "sine"
+//     },
+//     envelope: {
+//         attack: 0.005,
+//         decay: 0.1,
+//         sustain: 0.3,
+//         release: 1
+//     }
+// }).toMaster();
 
-    constructor(attackNoise: number, dampening: number, resonance: number) {
-        this.attackNoise = attackNoise;
-        this.dampening = dampening;
-        this.resonance = resonance;
-    }
 
-    getInstrument = (): Tone.PluckSynth => {
-        return new Tone.PluckSynth(this).toMaster();
-    }
-}
-let pluckSynth = new PluckSynth(0.5, 4000, 0.7).getInstrument().toMaster();
+// export class PluckSynth {
+//     attackNoise: number;
+//     dampening: number;
+//     resonance: number;
+
+//     constructor(attackNoise: number, dampening: number, resonance: number) {
+//         this.attackNoise = attackNoise;
+//         this.dampening = dampening;
+//         this.resonance = resonance;
+//     }
+
+//     getInstrument = (): Tone.PluckSynth => {
+//         return new Tone.PluckSynth(this).toMaster();
+//     }
+// }
+// let pluckSynth = new PluckSynth(0.5, 4000, 0.7).getInstrument().toMaster();
 
 // Other instruments we could use
 let membraneSynth = new Tone.MembraneSynth().toMaster();
@@ -90,7 +100,7 @@ export class Sequencer {
         }
 
         this.rowPitches = this.getPitchesArray();
-        let allInstruments = [synth, pluckSynth, membraneSynth, metalSynth];
+        let allInstruments = [synth, /*pluckSynth, */membraneSynth, metalSynth];
         this.rowInstruments = this.getInstrumentsArray(allInstruments);
         this.fillGridDiagonal();
         this.fillGridRandom(10);
