@@ -8,7 +8,7 @@ import * as Tone from "tone";
 
 export let main = (): void => {
 
-    let model: Sequencer = new Sequencer(4, 8);
+    let model: Sequencer = new Sequencer(8, 8);
     let view: SequencerView = new SequencerView(model);
     let controller: SequencerController = new SequencerController(model, view);
 
