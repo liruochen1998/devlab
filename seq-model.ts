@@ -10,6 +10,7 @@ import * as Tone from "tone";
 import { Instrument } from "tone";
 import { getToneSynth } from "./synth";
 
+/*
 export class Oscillator {
     type: Tone.OscillatorType;
     frequency: number;
@@ -17,6 +18,9 @@ export class Oscillator {
     constructor(type: Tone.OscillatorType) {
         this.type = type;
         this.frequency = 440;
+    }
+    get = (): Tone.Oscillator => {
+        return new Tone.Oscillator(this.type).toMaster();
     }
 }
 
@@ -31,6 +35,9 @@ export class Envelope {
         this.decay = decay;
         this.sustain = sustain;
         this.release = release;
+    }
+    get = (): Tone.Envelope => {
+        return new Tone.Envelope(this.attack, this.decay, this.sustain, this.release).toMaster();
     }
 }
 
@@ -80,6 +87,20 @@ let synth = getToneSynth(new Synth(oscillator, envelope));
 // Other instruments we could use
 let membraneSynth = new Tone.MembraneSynth().toMaster();
 let metalSynth = new Tone.MetalSynth().toMaster();
+
+*/
+
+
+let synth = new Tone.Synth().toMaster();
+let synth2 = new Tone.Synth().toMaster();
+let synth3 = new Tone.Synth().toMaster();
+let synth4 = new Tone.Synth().toMaster();
+
+/*
+let pluckSynth = new Tone.PluckSynth().toMaster();
+let membraneSynth = new Tone.MembraneSynth().toMaster();
+let metalSynth = new Tone.MetalSynth().toMaster();
+*/
 
 export class Sequencer {
     rows: number;
