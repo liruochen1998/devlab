@@ -48,6 +48,10 @@ export class SequencerView {
             for (let row = 0; row < this.model.rows; row++) {
                 let rowDiv: HTMLElement = document.createElement("div");
                 rowDiv.setAttribute("class", "row");
+                // connect with model random fill
+                if (this.model.grid[row][col] === true) {
+                    rowDiv.setAttribute("class", "row filled");
+                }
                 rowDiv.onclick = () => {
                     if (rowDiv.className === "row") { 
                         rowDiv.setAttribute("class", "row filled");
@@ -102,6 +106,7 @@ export class SequencerView {
         Tone.Transport.start();
     }
 
+    /*
     // old play method
     play(): void {
         let sequence = 0;
@@ -121,12 +126,10 @@ export class SequencerView {
         Tone.Transport.scheduleRepeat(repeat, "8n");
         Tone.Transport.start();
     }
+    */
 
     stop(): void {
         // stop the transport, which stop the sound
         Tone.Transport.stop();
     }
 }
-
-
-
